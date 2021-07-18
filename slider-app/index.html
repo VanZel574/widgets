@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+            integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+            crossorigin="anonymous">
+
+    </script>
+  </head>
+  <body>
+<!--    First slider element-->
+    <div class="slider-component1">
+      <div class="owl-carousel owl-theme">
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+      </div>
+
+      <!--      Controls slider-->
+      <button class="nav nav-left">Left</button>
+      <button class="nav nav-right">Right</button>
+    </div>
+
+    <hr>
+
+<!--    Second slider element-->
+    <div class="slider-component2">
+      <div class="owl-carousel owl-theme">
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+        <div> Your Content </div>
+      </div>
+
+      <!--      Controls slider-->
+      <button class="nav nav-left">Left</button>
+      <button class="nav nav-right">Right</button>
+    </div>
+
+
+
+    <script type="module" src="/main.js"></script>
+
+    <script type="module">
+      const slider = new SliderWidget({
+        el: 'slider-component1',
+        sliderOptions: {
+          loop: false,
+          items: 2,
+          nav: false,
+          dots: false,
+        },
+        navLeft: 'nav-left',
+        navRight: 'nav-right'
+      })
+      slider.initSlider()
+
+      const slider2 = new SliderWidget({
+        el: 'slider-component2',
+        sliderOptions: {
+          loop: false,
+          items: 4,
+          nav: false,
+          dots: false,
+        },
+        navLeft: 'nav-left',
+        navRight: 'nav-right'
+      })
+      slider2.initSlider()
+
+    </script>
+  </body>
+</html>

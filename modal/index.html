@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Title</title>
+    <link rel="stylesheet" href="index.css">
+    <style type="text/css">
+        .div-content{
+            height: 500px;
+            background-color: #22140D;
+            width: 100%;
+            color: white;
+        }
+        body{
+            height: 200vh;
+            background-color: #353A42;
+        }
+        .openModal{
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <button class="openModal" id="btn">открыть модалку</button>
+
+
+<!--    MODAL WIDGET-->
+    <div class="modal-wrap" id="modal">
+        <div class="modal-overlay"></div>
+
+        <div class="modal-container">
+            <div class="close-modal">X</div>
+            <div class="modal-content">
+                <h1>Hello modal</h1>
+                <input type="text">
+                <div class="div-content">text</div>
+                <button onclick="someFunc()">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+<!--    SCRIPTS-->
+
+    <script src="index.js"></script>
+
+    <script type="application/javascript">
+
+      // init modal widget
+      const modal = new ModalWidget({
+        btn: '#btn',
+        modal: '#modal',
+      })
+      modal.initModal()
+
+      // make some actions and then close
+      function someFunc() {
+        // some actions...
+
+        modal.closeModal()
+      }
+
+
+    </script>
+
+</body>
+</html>

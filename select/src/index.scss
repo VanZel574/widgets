@@ -1,0 +1,98 @@
+//* {
+//  box-sizing: border-box;
+//}
+
+.select {
+  width: 100%;
+  max-width: 400px;
+  min-width: 300px;
+  position: relative;
+
+  // Container for display value
+  &-value-container {
+    height: 40px;
+    //width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #b1acac;
+    border-radius: 5px;
+    padding: 0 0 0 15px;
+    cursor: pointer;
+  }
+
+  &-value {
+
+  }
+
+  // Select Controls and indicators
+  &-control-container {
+    width: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // Select nav
+  &-arrow {
+    fill: #868484;
+    transition: transform .15s cubic-bezier(1,-.115,.975,.855);
+  }
+
+  // Select dropdown
+  &-dropdown {
+    max-height: 300px;
+    overflow-y: auto;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    display: block;
+    border: 1px solid #b1acac;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  }
+
+  &-dropdown-list {
+    padding: 0;
+    margin: 0;
+  }
+
+  // Select content items
+  &-option:not(:last-child) {
+    border-bottom: 1px solid #b1acac;
+  }
+
+  &-option {
+    list-style: none;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #b1acac;
+    }
+    &.selected {
+      background-color: #b1acac;
+    }
+  }
+}
+
+// Open select
+.select-open {
+  .select-value-container {
+    border-bottom: none;
+  }
+  .select-dropdown {
+    display: block;
+  }
+  .select-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+// Close select
+.select-close {
+  .select-dropdown {
+    display: none;
+  }
+}
