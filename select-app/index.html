@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.scss">
+    <title>Select App</title>
+    <style>
+      .layout {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: 5rem;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="layout">
+    <div id="select"></div>
+
+    <div id="select2"></div>
+  </div>
+
+
+  <script src="/main.js"></script>
+
+  <script>
+
+    const items = ['Vue', 'React', 'Svelte', 'Angular']
+
+    const s = new CustomSelect('#select', {
+      data: items,
+      placeholder: 'select item',
+      // selected: 0,
+      onSelected: (item) => console.log(item)
+    })
+
+
+  </script>
+  </body>
+</html>
