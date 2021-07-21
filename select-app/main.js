@@ -164,14 +164,14 @@ class CustomSelect {
         this.selectOption()
         // Save to prev selected
         this.saveClickedOption(clickElem.value, 'prev')
+        // Close
+        this.close()
         // Callback
         if (this.options.onSelected) {
             this.showLoader()
             await this.options.onSelected(this.GET_SELECTED_OPTION.curValue)
             this.hideLoader()
         }
-        // Close
-        this.close()
         // Remove events if once
         if (this.options.once) {
             this.removeEvents()
