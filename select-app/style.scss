@@ -18,7 +18,12 @@
   }
 
   &-value {
-
+    width: 100%;
+    height: 100%;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
   }
 
   // Select Controls and indicators
@@ -30,11 +35,36 @@
     align-items: center;
   }
 
+
   // Select nav
   &-arrow {
     fill: #868484;
     transition: transform .15s cubic-bezier(1,-.115,.975,.855);
   }
+
+  &-spinner-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  &-spinner {
+    display: none;
+    animation: rotate 2s linear infinite;
+    position: relative;
+    //top: 50%;
+    //left: 50%;
+    //margin: 0px 5px 0 -12px;
+    width: 20px;
+    height: 20px;
+
+    & .path {
+      stroke: #4275ee;
+      stroke-linecap: round;
+      animation: dash 1.5s ease-in-out infinite;
+    }
+  }
+
 
   // Select dropdown
   &-dropdown {
@@ -72,15 +102,12 @@
     }
   }
 
-  //.back-layout {
-  //  position: fixed;
-  //  top: 0;
-  //  right: 0;
-  //  bottom: 0;
-  //  left: 0;
-  //  background-color: rgba(107, 125, 125, 0.26);
-  //  z-index: -1;
-  //}
+  .hide-control {
+    display: none;
+  }
+  .show-control {
+    display: block;
+  }
 }
 
 // Open select
@@ -100,6 +127,27 @@
 .select-close {
   .select-dropdown {
     display: none;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
 }
 

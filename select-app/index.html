@@ -29,11 +29,26 @@
 
     const items = ['Vue', 'React', 'Svelte', 'Angular']
 
+    const newData = (value) => {
+      const options = items.filter(elem => elem.includes(value))
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(options)
+        }, 3000)
+      })
+    }
+
+    // const newData = (value) => {
+    //   return items.filter(elem => elem.includes(value))
+    // }
+
     const s = new CustomSelect('#select', {
       data: items,
-      placeholder: 'select item',
-      // selected: 0,
-      onSelected: (item) => console.log(item)
+      // placeholder: 'select item',
+      selected: 0,
+      onSelected: newData,
+      // onInput: newData
     })
 
 
