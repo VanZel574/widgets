@@ -118,6 +118,14 @@ class CustomSelect {
         }
     }
 
+    removeEvents () {
+        this.$value.removeEventListener('input', this.onInput)
+        document.removeEventListener('click', this.close)
+        document.removeEventListener('touchstart', this.close)
+        this.$select.querySelector('[data-type="dropdown"]').removeEventListener('click', this.onClickOption)
+        this.$select.querySelector('[data-type="value-container"]').removeEventListener('click', this.toggleSelect)
+    }
+
     // Render template
     render () {
         // const selected = this.options.selected ? this.options.data[this.options.selected] : null
@@ -157,7 +165,6 @@ class CustomSelect {
         // Save to prev selected
         this.saveClickedOption(clickElem.value, 'prev')
         // Callback
-        // this.options.onSelected ? this.options.onSelected(this.GET_SELECTED_OPTION.curValue) : null
         if (this.options.onSelected) {
             this.showLoader()
             await this.options.onSelected(this.GET_SELECTED_OPTION.curValue)
@@ -165,6 +172,10 @@ class CustomSelect {
         }
         // Close
         this.close()
+        // Remove events if once
+        if (this.options.once) {
+            this.removeEvents()
+        }
     }
 
     // Save selected option
@@ -230,11 +241,7 @@ class CustomSelect {
     }
 
     destroy () {
-        this.$value.removeEventListener('input', this.onInput)
-        document.removeEventListener('click', this.close)
-        document.removeEventListener('touchstart', this.close)
-        this.$select.querySelector('[data-type="dropdown"]').removeEventListener('click', this.onClickOption)
-        this.$select.querySelector('[data-type="value-container"]').removeEventListener('click', this.toggleSelect)
+        this.removeEvents()
         this.$select.innerHTML = ''
     }
 
