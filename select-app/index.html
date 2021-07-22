@@ -25,10 +25,27 @@
 
   <script>
 
-    const items = ['Vue', 'React', 'Svelte', 'Angular']
+    const items = [
+      {
+        id: 1,
+        value: 'Vue'
+      },
+      {
+        id: 2,
+        value: 'React'
+      },
+      {
+        id: 3,
+        value: 'Svelte'
+      },
+      {
+        id: 4,
+        value: 'Angular'
+      }
+    ]
 
     const newData = (value) => {
-      const options = items.filter(elem => elem.includes(value))
+      const options = items.filter(elem => elem.value.includes(value))
 
       return new Promise(resolve => {
         setTimeout(() => {
@@ -43,10 +60,10 @@
 
     const s = new CustomSelect('#select', {
       data: items,
-      // placeholder: 'select item',
-      selected: 0,
+      placeholder: 'select item',
+      // selected: 0,
       onSelected: newData,
-      // onInput: newData,
+      onInput: newData,
       once: false,
     })
 

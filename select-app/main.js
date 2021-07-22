@@ -2,7 +2,7 @@
 * Select
 * const customSelect = new CustomSelect('#id', options)
 * options = {
-*   data: Array of strings,
+*   data: Array of objects {id: Number, value: String},
 *   placeholder: string,
 *   selected: number,
 *   onSelect: function(item)
@@ -17,18 +17,20 @@
 
 
 
-
 const getTemplate = ({ data=[], placeholder }, selected = null) => {
     let text = placeholder ?? ''
 
-    const selectOptions = data.map(value => {
+    const selectOptions = data.map((item, index) => {
         let selectedClass = null
-        if (value === selected) {
-            text = value
-            selectedClass = 'selected'
+        if (selected) {
+            if (item.id === selected.id) {
+                text = item.value
+                selectedClass = 'selected'
+            }
         }
+
         return `
-      <li class="select-option ${selectedClass}" data-type="option" data-value="${value}">${value}</li>
+      <li class="select-option ${selectedClass}" data-index="${index}" data-value="${item.value}">${item.value}</li>
     `
     })
 
@@ -159,11 +161,11 @@ class CustomSelect {
         const clickElem = e.target.dataset
 
         // Save cur selected
-        this.saveClickedOption(clickElem.value, 'cur')
+        this.saveClickedOption(this.options.data[+clickElem.index], 'cur')
         // Highlight selected id
         this.selectOption()
         // Save to prev selected
-        this.saveClickedOption(clickElem.value, 'prev')
+        this.saveClickedOption(this.options.data[+clickElem.index], 'prev')
         // Close
         this.close()
         // Callback
@@ -190,18 +192,17 @@ class CustomSelect {
         this.SET_SELECTED_OPTION = selected
     }
 
-
     // Highlight selected item
     selectOption () {
         const { prevValue, curValue } = this.GET_SELECTED_OPTION
 
         if (prevValue) {
-            this.$select.querySelector(`[data-value="${prevValue}"]`).classList.remove('selected')
+            this.$select.querySelector(`[data-value="${prevValue.value}"]`).classList.remove('selected')
         }
 
         if (curValue) {
-            this.$select.querySelector(`[data-value="${curValue}"]`).classList.add('selected')
-            this.$value.value = this.GET_SELECTED_OPTION.curValue
+            this.$select.querySelector(`[data-value="${curValue.value}"]`).classList.add('selected')
+            this.$value.value = this.GET_SELECTED_OPTION.curValue.value
         }
     }
 
@@ -218,10 +219,10 @@ class CustomSelect {
     }
 
     // Render NewData
-    renderDropdownItems (data, selected) {
-        const itemList = data.map(value => {
+    renderDropdownItems (data) {
+        const itemList = data.map((item, index) => {
             return `
-                <li class="select-option" data-type="option" data-value="${value}">${value}</li>
+                <li class="select-option" data-index="${index}" data-value="${item.value}">${item.value}</li>
             `
         })
         const $dropdown = this.$select.querySelector('.select-dropdown-list')
