@@ -61,6 +61,9 @@ const getTemplate = ({ data=[], placeholder }, selected = null) => {
 class CustomSelect {
     constructor(id, options) {
         this.$select = document.querySelector(id)
+        // Rename props in options.data
+        this.renameData(options)
+
         this.options = options
         this.selected = {
             prevValue: null,
@@ -131,9 +134,10 @@ class CustomSelect {
     // Render template
     render () {
         // const selected = this.options.selected ? this.options.data[this.options.selected] : null
-        const selected = this.options.selected
+        const selected = this.options.data.find(item => item.id === this.options.selected)
+
         if (this.options.data) {
-            this.$select.insertAdjacentHTML("afterbegin", getTemplate(this.options, this.options.data[selected]))
+            this.$select.insertAdjacentHTML("afterbegin", getTemplate(this.options, selected))
         }
     }
 
@@ -238,7 +242,19 @@ class CustomSelect {
     hideLoader () {
         this.$select.querySelector('.select-arrow').classList.remove('hide-control')
         this.$select.querySelector('.select-spinner').classList.remove('show-control')
+    }
 
+    // Rename second prop key to value
+    renameData (options) {
+        options.data = options.data.map(item => {
+            if ('value' in item) return item
+            const propList = Object.entries(item)
+            propList.forEach(prop => {
+                if (prop[0] === 'id') return
+                else prop[0] = 'value'
+            })
+            return Object.fromEntries(propList)
+        })
     }
 
     destroy () {

@@ -28,24 +28,24 @@
     const items = [
       {
         id: 1,
-        value: 'Vue'
+        name: 'Vue'
       },
       {
         id: 2,
-        value: 'React'
+        name: 'React'
       },
       {
         id: 3,
-        value: 'Svelte'
+        name: 'Svelte'
       },
       {
         id: 4,
-        value: 'Angular'
+        name: 'Angular'
       }
     ]
 
     const newData = (value) => {
-      const options = items.filter(elem => elem.value.includes(value))
+      const options = items.filter(elem => elem.name.includes(value))
 
       return new Promise(resolve => {
         setTimeout(() => {
@@ -61,7 +61,7 @@
     const s = new CustomSelect('#select', {
       data: items,
       placeholder: 'select item',
-      // selected: 0,
+      selected: 4,
       onSelected: newData,
       onInput: newData,
       once: false,
