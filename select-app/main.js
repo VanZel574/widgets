@@ -17,23 +17,23 @@
 
 
 
-const getTemplate = ({ data=[], placeholder }, selected = null) => {
+/*-----------------
+* Dropdown items
+*----------------*/
+const getDropDownItems = data => {
+    return data.map(item =>
+        `<li class="select-option" data-id="${item.id}" data-value="${item.value}">${item.value}</li>`
+    )
+}
+
+/*-------------------
+* Template html
+*------------------*/
+const getTemplate = ({ data=[], placeholder }) => {
     let text = placeholder ?? ''
 
-    const selectOptions = data.map((item, index) => {
-        let selectedClass = null
-        if (selected) {
-            if (item.id === selected.id) {
-                text = item.value
-                selectedClass = 'selected'
-            }
-        }
-
-        return `
-      <li class="select-option ${selectedClass}" data-index="${index}" data-value="${item.value}">${item.value}</li>
-    `
-    })
-
+    // Build dropdown items
+    const selectOptions = getDropDownItems(data)
 
     return `
         <div class="select-value-container" data-type="value-container">
@@ -75,11 +75,23 @@ class CustomSelect {
     }
 
     // Set active option id
-    set SET_SELECTED_OPTION (newVal) {
-        this.selected = newVal
-    }
+    // set SET_SELECTED_OPTION (newVal) {
+    //     this.selected = newVal
+    // }
     get GET_SELECTED_OPTION () {
         return this.selected
+    }
+
+    // Change selected option
+    set SET_SELECTED (id) {
+        if (id !== undefined) {
+            const selectedItem = this.options.data.find(item => item.id === id)
+            this.saveClickedOption(selectedItem, 'cur')
+
+            this.selectOption()
+            this.saveClickedOption(selectedItem, 'prev')
+        }
+
     }
 
     get IS_OPEN () {
@@ -100,11 +112,7 @@ class CustomSelect {
         this.eventsHandler()
 
         // Selected item in options
-        const selectedId = this.options.selected
-        if (selectedId !== undefined) {
-            this.saveClickedOption(this.options.data[selectedId], 'cur')
-            this.saveClickedOption(this.options.data[selectedId], 'prev')
-        }
+        this.SET_SELECTED = this.options.selected
     }
 
     eventsHandler () {
@@ -133,11 +141,8 @@ class CustomSelect {
 
     // Render template
     render () {
-        // const selected = this.options.selected ? this.options.data[this.options.selected] : null
-        const selected = this.options.data.find(item => item.id === this.options.selected)
-
         if (this.options.data) {
-            this.$select.insertAdjacentHTML("afterbegin", getTemplate(this.options, selected))
+            this.$select.insertAdjacentHTML("afterbegin", getTemplate(this.options))
         }
     }
 
@@ -164,12 +169,9 @@ class CustomSelect {
         e.stopPropagation()
         const clickElem = e.target.dataset
 
-        // Save cur selected
-        this.saveClickedOption(this.options.data[+clickElem.index], 'cur')
-        // Highlight selected id
-        this.selectOption()
-        // Save to prev selected
-        this.saveClickedOption(this.options.data[+clickElem.index], 'prev')
+        // Select item
+        this.SET_SELECTED = +clickElem.id
+
         // Close
         this.close()
         // Callback
@@ -224,11 +226,7 @@ class CustomSelect {
 
     // Render NewData
     renderDropdownItems (data) {
-        const itemList = data.map((item, index) => {
-            return `
-                <li class="select-option" data-index="${index}" data-value="${item.value}">${item.value}</li>
-            `
-        })
+        const itemList = getDropDownItems(data)
         const $dropdown = this.$select.querySelector('.select-dropdown-list')
         $dropdown.innerHTML = ''
         $dropdown.insertAdjacentHTML("afterbegin", itemList.join(''))
